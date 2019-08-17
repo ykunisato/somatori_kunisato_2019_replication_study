@@ -1,0 +1,18 @@
+Type: Compendium
+Package: somatori kunisato 2019 replication study
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1
+Authors@R: 
+    person(given = "Yoshihiko",
+           family = "Kunisato",
+           role = c("aut", "cre"),
+           email = "ykunisato@gmail.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This compendium is used by replication study
+    of Somatori & Kunisato(2019)
+License: What license it uses
+Depends: 
+    rmarkdown,
+    tidyverse
+Encoding: UTF-8
+LazyData: true
