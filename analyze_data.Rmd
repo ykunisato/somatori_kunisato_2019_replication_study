@@ -255,17 +255,18 @@ mutate_qexp <- function(data, iteration){
 双曲割引関数, 指数関数, q-指数関数それぞれについて最尤推定を行い, 元データに推定値を結合する。
 
 ```{r}
-dat <- dat %>%
-  split(.$id) %>%
-  map(mutate_hdf, 100000) %>%
-  map(mutate_exp, 100000) %>%
-  map_dfr(mutate_qexp, 100000)
+# 最尤推定の処理は重いので，既に推定済みの結果を読み込む。
+dat <- readRDS(file = "data_estimated.rds")
+
+# 以下が最尤推定になるが処理が重いので，Binderでは実行せず，上記のように推定済みの結果を読み込んでください。
+# dat <- dat %>%
+#  split(.$id) %>%
+#  map(mutate_hdf, 100000) %>%
+#  map(mutate_exp, 100000) %>%
+#  map_dfr(mutate_qexp, 100000)
 
 # 推定結果を保存
-saveRDS(object = dat, file = "data_estimated.rds")
-
-# 上記の推定を省略する場合は，以下のコードを実行し，推定済みの結果を読み込むことができる
-# dat <- readRDS(file = "data_estimated.rds")
+#saveRDS(object = dat, file = "data_estimated.rds")
 ```
 
 ### 相関分析
