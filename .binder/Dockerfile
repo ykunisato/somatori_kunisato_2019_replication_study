@@ -1,7 +1,8 @@
 FROM rocker/binder:3.6.0
 LABEL maintainer='Yoshihiko Kunisato'
 USER root
-RUN apt-get install -y fonts-ipaexfont
+RUN apt-get update \
+&& apt-get install -y fonts-ipaexfont
 COPY . ${HOME}
 RUN chown -R ${NB_USER} ${HOME}
 USER ${NB_USER}
