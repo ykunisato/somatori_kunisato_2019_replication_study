@@ -20,7 +20,7 @@ BinderでRstudio serverが起動したら，"analysis"フォルダ内の"analyze
 
 ## DOI
 
-本リポジトリのDigital Object Identifier(DOI)は，以下になります。
+本リポジトリのDigital Object Identifier(DOI)は，以下になります。本リポジトリのコードやデータの使用に関してDOIを引用ください。
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3402512.svg)](https://doi.org/10.5281/zenodo.3402512)
 
