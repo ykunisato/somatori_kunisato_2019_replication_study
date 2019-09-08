@@ -16,13 +16,15 @@
 
 ## 解析の再現方法
 
-BinderでRstudio serverが起動したら，"analysis"フォルダ内の"analyze_data.Rmd"を開いてください。RmdはR Markdownファイルになります。(1)Knitボタンをクリックして，一気に解析を行ってHTMLファイルで確認するか，(2)それぞれのチャンクを上から順番に実施するかのどちらかで杣取・国里(2019)の「アンへドニア(anhedonia)と遅延割引: Lempert & Pizzagalli (2010)の追試」の解析を再現できるかと思います。
+BinderでRstudio serverが起動したら，"analysis"フォルダ内の"analyze_data.Rmd"を開いてください。RmdはR Markdownファイルになります。
+
+(1)Knitボタンをクリックして，一気に解析を行ってHTMLファイルで確認するか，(2)それぞれのチャンクを上から順番に実施するかのどちらかで杣取・国里(2019)の「アンへドニア(anhedonia)と遅延割引: Lempert & Pizzagalli (2010)の追試」の解析を再現できるかと思います。
 
 ※なお，最尤推定は計算の負荷が高いので，Binderで実行しないようにしています。もし推定も実施したい場合は，コードとデータをダウンロードした上で，ローカル環境で行ってください。
 
 ## DOI
 
-本リポジトリのDigital Object Identifier(DOI)は，以下になります。本リポジトリのコードやデータの使用に関してDOIを引用ください。
+本リポジトリのDigital Object Identifier(DOI)は，以下になります。本リポジトリのコードやデータの使用に関しては，以下のDOIも引用ください。
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3402512.svg)](https://doi.org/10.5281/zenodo.3402512)
 
