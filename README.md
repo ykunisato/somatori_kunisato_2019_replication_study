@@ -18,6 +18,9 @@ BinderでRstudio serverが起動したら，"analysis"フォルダ内の"analyze
 
 ※なお，最尤推定は計算の負荷が高いので，Binderで実行しないようにしています。もし推定も実施したい場合は，コードとデータをダウンロードした上で，ローカル環境で行ってください。
 
+## DOI
+
 本リポジトリのDigital Object Identifier(DOI)は，以下になります。
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3402512.svg)](https://doi.org/10.5281/zenodo.3402512)
 
