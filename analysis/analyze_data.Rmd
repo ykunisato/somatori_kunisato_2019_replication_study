@@ -14,9 +14,9 @@ output:
 ---
 
 ## はじめに
-このコードは, 「アンへドニア(anhedonia)と遅延割引: Lempert & Pizzagalli (2010)の追試」で用いられている統計解析を行うためのコードである。匿名化処理後のデータ("data_anonymized")を読み込み, 以下の解析を行う。なお, 年齢データは参加者を特定できてしまう可能性があるため, 本コードおよび匿名化処理後のデータには記載しない。また, 本文中に掲載されている図表は, 本コードによって作成したものを文字サイズ等加工して掲載されている。そのため, 本コードの出力と多少見え方が異なる可能性がある。
-なお, 割引率の推定のため, このRmdファイルの実行には第一著者の環境(Macbook Pro, 3.1 GHz Intel Core i7, メモリ16GB)で5-6時間ほどかかる。
-コメントアウトされている部分を実行することで，割引率の推定部分を省略することができる。
+本コードは, 杣取・国里(2019)の「アンへドニア(anhedonia)と遅延割引:
+Lempert & Pizzagalli (2010)の追試」で用いられている統計解析を行うためのものである。
+匿名化処理後のデータ("data_anonymized")を読み込み, 以下の解析を行う。
 
 * 割引率の推定
 
@@ -30,6 +30,13 @@ output:
 
 * AUCを用いた相関分析
 
+年齢は参加者を特定できてしまう可能性があるため, 本コードおよび匿名化処理後のデータでは層別化したものを用いる。
+本文中に掲載されている図表は,
+本コードによって作成したものを文字サイズ等加工して掲載されている。そのため, 本コードの出力と多少見え方が異なる可能性がある。
+
+割引率の推定には，第一著者の環境(Macbook Pro, 3.1 GHz Intel Core i7, メモリ16GB)で5-6時間ほどかかる。そのため推定済みの結果をdata_estimaed.rdsとして保存しており，
+以下では使用している。もし，割引率の推定も検討されたい場合は，計算負荷が高いのでBinderでの実行を避け，各自のローカル環境で実施を推奨する。
+
 ## 使用するRパッケージ
 ```{r}
 invisible({rm(list=ls());gc();gc()})
@@ -42,7 +49,7 @@ set.seed(1234)
 ## データの読み込み
 ```{r}
 dat <- read.csv("../data/data_anonymized.csv", header = T) %>%
-  # IVがドル単位(100円 = 1ドル)になっているので円単位に変換
+  # IVがドル単位(100円 = 1ドル)になっているため円単位に変換
   mutate(d0_iv = d0_iv*100,
          d2_iv = d2_iv*100,
          d30_iv = d30_iv*100,
@@ -50,11 +57,11 @@ dat <- read.csv("../data/data_anonymized.csv", header = T) %>%
          d365_iv = d365_iv*100)
 ```
 
-## Lempert & Pizzagalli (2010)と同じ相関分析
+## Lempert & Pizzagalli (2010)と同様の相関分析
 
 Lempert & Pizzagalli (2010)と同様に, 双曲割引関数, 指数関数, q-指数関数を用いて割引率を最尤推定し, 双曲割引関数によって得られた割引率とアンヘドニアの相関を検討する。
 
-### 割引率を推定する関数の読み込み
+### 割引率を推定する自作R関数を読み込む
 
 ```{r}
 source( "../R/estimate_discounting_rate.R" )
@@ -62,13 +69,13 @@ source( "../R/estimate_discounting_rate.R" )
 
 ### 最尤推定
 
-双曲割引関数, 指数関数, q-指数関数それぞれについて最尤推定を行い, 元データに推定値を結合する。
+双曲割引関数, 指数関数, q-指数関数それぞれについて最尤推定を行い, 元データに推定値を結合するが(#したコード)，以下では推定済みの結果を読み込んでいる。
 
 ```{r}
-# 最尤推定の処理は重いので，既に推定済みの結果を読み込む。
+# 最尤推定の処理は計算負荷が高いので，既に推定済みの結果を読み込む。
 dat <- readRDS(file = "../data/data_estimated.rds")
 
-# 以下が最尤推定になるが処理が重いので，Binderでは実行せず，上記のように推定済みの結果を読み込んでください。
+# 以下が最尤推定になる。計算負荷が高いので，Binderでは実行しない。
 # dat <- dat %>%
 #  split(.$id) %>%
 #  map(mutate_hdf, 100000) %>%
@@ -167,48 +174,10 @@ dat <- dat %>%
          d365_iv_qexp_pred = 1000/((1+(1-q_qexp)*k_qexp*365))^(1/(1-q_qexp)))
 ```
 
-### R2を計算する関数を作成
+### R2を計算する自作R関数を読み込む
+
 ```{r}
-calcu_R2 <- function(data){
-  # R2を計算する
-  #
-  # Args:
-  # data: 参加者1人分のデータ
-  #
-  # Return:
-  # 参加者1人分のR2
-  
-  # IVおよびIVの予測値, A, Dを抜き出す
-  iv <- data %>%
-    select(d0_iv:d365_iv) %>%
-    as.numeric() # ベクトル化
-  A <- 1000
-  D <- c(0, 2, 30, 180, 365)
-  
-  # 双曲割引関数による予測値を計算
-  iv_hdf <- data %>%
-    select(d0_iv_hdf_pred:d365_iv_hdf_pred) %>%
-    as.numeric()
-  
-  # 指数関数による予測値を計算
-  iv_exp <- data %>%
-    select(d0_iv_exp_pred:d365_iv_exp_pred) %>%
-    as.numeric()
-  
-  # q-指数関数による予測値を計算
-  iv_qexp <- data %>%
-    select(d0_iv_qexp_pred:d365_iv_qexp_pred) %>%
-    as.numeric()
-  
-  # R2を計算しデータに結合
-  data <- data %>%
-    mutate(R2_hdf = 1-sum((iv-iv_hdf)^2)/sum((iv)^2),
-           R2_exp = 1-sum((iv-iv_exp)^2)/sum((iv)^2),
-           R2_qexp = 1-sum((iv-iv_qexp)^2)/sum((iv)^2),
-           meanR2 = mean(c(R2_hdf, R2_exp, R2_qexp))) # 可視化する際に使用
-  
-  return(data)
-}
+source( "../R/compute_r2.R" )
 ```
 
 ### R2を比較
@@ -361,35 +330,9 @@ dat %>%
 ```
 
 ## AUCを用いた相関分析
-### AUCを計算する関数を作成
+### AUCを計算する自作R関数を作成
 ```{r echo=TRUE}
-calcu_auc <- function(data){
-  # AUCを計算する
-  #
-  # Args:
-  # data: 参加者1人分のデータ
-  #
-  # Return:
-  # 参加者1人分のAUC
-  
-  # 参加者1人分のIVおよびDを抜き出す
-  iv <- data %>%
-    select(d0_iv:d365_iv) %>%
-    as.numeric() *100
-  D <- c(0, 2, 30, 180, 365)
-  
-  # AUCが0-1になるように, IVおよびDを正規化
-  iv <- iv/1000
-  D <- D/365
-  
-  # AUCを計算
-  temp <- sum(diff(D) * (iv[-1] + iv[-length(iv)]))/2
-
-  data <- data %>%
-    mutate(auc = temp)
-  
-  return(data)
-}
+source( "../R/compute_auc.R" )
 ```
 
 ###  AUCを計算

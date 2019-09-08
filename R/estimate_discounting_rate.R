@@ -1,6 +1,5 @@
+# 双曲割引関数を用いて割引率を推定する ========================================================
 mutate_hdf <- function(data, iteration){
-  # 双曲割引関数を用いて割引率を推定する
-  #
   # Args:
   # data: 参加者1人分のデータ
   # iteration: 最尤推定を実施する際に初期値を変えて推定を繰り返す回数
@@ -61,9 +60,8 @@ mutate_hdf <- function(data, iteration){
   return(temp)
 }
 
+# 指数関数を用いて割引率を推定する ============================================================
 mutate_exp <- function(data, iteration){
-  # 指数関数を用いて割引率を推定する
-  #
   # Args:
   # data: 参加者1人分のデータ
   # iteration: 最尤推定を実施する際に初期値を変えて推定を繰り返す回数
@@ -124,9 +122,8 @@ mutate_exp <- function(data, iteration){
   return(temp)
 }
 
+# q-指数関数を用いて割引率を推定する ==========================================================
 mutate_qexp <- function(data, iteration){
-  # q-指数関数を用いて割引率を推定する
-  #
   # Args:
   # data: 参加者1人分のデータ
   # iteration: 最尤推定を実施する際に初期値を変えて推定を繰り返す回数
@@ -140,7 +137,6 @@ mutate_qexp <- function(data, iteration){
     as.numeric() # ベクトル化
   A <- 1000
   D <- c(0, 2, 30, 180, 365)
-  
   
   # 対数尤度関数を定義する
   loglike_qexp <- function(params, iv, A, D){
