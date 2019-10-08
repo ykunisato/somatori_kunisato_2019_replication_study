@@ -9,7 +9,7 @@ calcu_auc <- function(data){
   # 参加者1人分のIVおよびDを抜き出す
   iv <- data %>%
     select(d0_iv:d365_iv) %>%
-    as.numeric() *100
+    as.numeric() 
   D <- c(0, 2, 30, 180, 365)
   
   # AUCが0-1になるように, IVおよびDを正規化
