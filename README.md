@@ -10,15 +10,18 @@
 
 ※ BinderでのRstudio serverの起動にはある程度時間がかかります。
 
-<!-- badges: start -->
+  <!-- badges: start -->
   [![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ykunisato/somatori_kunisato_2019_replication_study/master?urlpath=rstudio)
-<!-- badges: end -->
+  <!-- badges: end -->
 
 ## 解析の再現方法
 
-BinderでRstudio serverが起動したら，"analysis"フォルダ内の"analyze_data.Rmd"を開いてください。RmdはR Markdownファイルになります。
+BinderでRstudio serverが起動したら，"analysis"フォルダ内の"analyze_data_00"から"analyze_data_03"まで順番に開いてください。
 
-以下の２通りの方法で，杣取・国里(2019)の「アンへドニア(anhedonia)と遅延割引: Lempert & Pizzagalli (2010)の追試」の解析を再現できるかと思います。
+なお，匿名化されてないデータを扱う"analyze_data_00"と"analyze_data_03"はHTMLファイルで提供していますが，"analyze_data_01"と"analyze_data_02"はR Markdown形式で配布しており実行可能になります。
+
+"analyze_data_01"と"analyze_data_02"は，以下の２通りの方法で，杣取・国里(2019)の「アンへドニア(anhedonia)と遅延割引: Lempert & Pizzagalli (2010)の追試」の解析を再現できるかと思います。
+
 - (1)Knitボタンをクリックして，一気に解析を行ってHTMLファイルで確認する
 - (2)"analyze_data.Rmd"の各チャンクを上から順番に実施する
 
