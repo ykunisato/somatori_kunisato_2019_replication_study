@@ -12,6 +12,8 @@ Description: This compendium is used by replication study of Somatori & Kunisato
 License: MIT + file LICENSE
 Depends: 
     rmarkdown,
-    tidyverse
+    tidyverse,
+    psych,
+    compute.es
 Encoding: UTF-8
 LazyData: true

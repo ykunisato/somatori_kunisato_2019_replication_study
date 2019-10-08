@@ -39,8 +39,6 @@ Lempert & Pizzagalli (2010)の追試」で用いられている統計解析を�
 
 ## 使用するRパッケージ
 ```{r}
-invisible({rm(list=ls());gc();gc()})
-
 library(tidyverse)
 
 set.seed(1234)
@@ -330,7 +328,7 @@ dat %>%
 ```
 
 ## AUCを用いた相関分析
-### AUCを計算する自作R関数を作成
+### AUCを計算する自作R関数を読み込む
 ```{r echo=TRUE}
 source( "../R/compute_auc.R" )
 ```
